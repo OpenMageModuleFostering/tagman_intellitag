@@ -32,7 +32,7 @@ class Tagman_Intellitag_Block_JsInjector
 					var a=d.createElement(s),b=d.getElementsByTagName(s)[0];
 					a.async=true;a.type="text/javascript";
 					a.src="//'.$lHost.'/clients/"+client+"/"+siteId+".js";
-					a.tagman="st=(" + new Date() +")&c=" + client + "&sid=" + siteId;
+					a.tagman="st="+(+new Date())+"&c="+client+"&sid="+siteId;
 					b.parentNode.insertBefore(a,b);
 					})(document,"script");
 					
