@@ -1,0 +1,16 @@
+{
+    "name": "OpenMageModuleFostering/Tagman_Intellitag",
+    "type": "magento-module",
+    "license": "Open-Software-License-(OSL)",
+    "homepage": "",
+    "description": "Extension injects TagMan javascript code into every client page to provide TagMan's experience.",
+    "authors": [
+    {
+        "name": "TagMan Ltd.",
+        "email": "toby.doig@tagman.com"
+    }
+],
+    "suggest": {
+        "magento-hackathon/magento-composer-installer": "*"
+    }
+}

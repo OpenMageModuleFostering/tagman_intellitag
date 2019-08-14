@@ -1,0 +1,78 @@
+<?xml version="1.0"?>
+<config>
+    <tabs>
+        <myconf translate="label">
+            <label>TAGMAN</label>
+            <sort_order>150</sort_order>
+        </myconf>
+    </tabs>
+    <sections>
+        <tab1 translate="label" module="adminhtml">
+            <label>Settings</label>
+            <tab>myconf</tab>
+            <sort_order>10</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>1</show_in_website>
+            <show_in_store>1</show_in_store>
+            <groups>
+                <credentials translate="label comment">
+                    <label>Client Credentials</label>
+                    <sort_order>50</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <comment><![CDATA[ <img src="http://www.tagman.com/wp-content/themes/tagman-0-1/images/logo.jpg" /><br><p>Please fill in the required data</p>]]></comment>
+                    <fields>					
+                        <client_id_text_field translate="label comment">
+                            <label>CLIENT ID</label>
+                            <comment>Client ID provided from Tagman</comment>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </client_id_text_field>
+						<site_id_text_field translate="label comment">
+                            <label>SITE ID</label>
+                            <comment>Site ID</comment>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </site_id_text_field>
+                        <host_text_field translate="label comment">
+                            <label>CDN HOST</label>
+                            <comment>Production and Staging CDN Host</comment>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </host_text_field>
+                    </fields>
+                </credentials>
+                <variables translate="label comment">
+                    <label>Variable List</label>
+                    <sort_order>60</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <comment><![CDATA[The variable <strong>page_type</strong> will be added automaticly]]></comment>
+                        <fields>
+                            <field translate="label">
+                                <label>Variables</label>
+                                <frontend_model>tagman_intellitag/field</frontend_model>
+                                <backend_model>adminhtml/system_config_backend_serialized_array</backend_model>
+                                <source_model>tagman_intellitag/system_config_source_model_select</source_model>
+                                <sort_order>100</sort_order>
+                                <show_in_default>1</show_in_default>
+                                <show_in_website>1</show_in_website>
+                                <show_in_store>1</show_in_store>
+                            </field>
+                        </fields>
+                </variables>
+            </groups>
+        </tab1>
+    </sections>
+</config>

@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<config>
+	<menu>
+        <tagman_menu translate="title" module="tagman_intellitag">
+            <title>Tagman Manager</title>
+            <sort_order>300</sort_order>
+            <children>
+
+                <variables_menu_item translate="title" module="tagman_intellitag">
+                    <title>Variables</title>
+                    <sort_order>20</sort_order>
+                    <action>adminhtml/variables</action>
+
+                </variables_menu_item>
+
+            </children>
+        </tagman_menu>
+    </menu>
+    <acl>
+        <resources>
+            <admin>
+                <children>
+					<tagman_menu translate="title" module="tagman_intellitag">
+                        <title>Tagman Manager</title>
+                        <sort_order>300</sort_order>
+                        <children>
+
+                            <variables_menu_item translate="title" module="tagman_intellitag">
+                                <title>Variables</title>
+                                <sort_order>10</sort_order>
+                            </variables_menu_item>
+
+                        </children>
+                    </tagman_menu>
+                    <system>
+                        <children>
+                            <config>
+                                <children>
+                                    <tab1>
+                                        <title>Tagman_Intellitag</title> <!-- Used in resources tree -->
+                                    </tab1>
+                                </children>
+                            </config>
+                        </children>
+                    </system>
+                </children>
+            </admin>
+        </resources>
+    </acl>
+</config>

@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<layout>
+	<adminhtml_variables_index>
+        <reference name="content">
+            <block type="tagman_intellitag/adminhtml_variables" name="tagman_intellitag_variables" />
+        </reference>
+    </adminhtml_variables_index>
+</layout>

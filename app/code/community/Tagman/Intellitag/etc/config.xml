@@ -1,0 +1,90 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Tagman_Intellitag>
+            <version>1.0.0</version>
+        </Tagman_Intellitag>
+    </modules>
+	<global>
+	  <blocks>
+            
+            <!-- a unique short name for our block files -->
+            <tagman_intellitag>
+                
+                <!-- the location of our module's blocks -->
+                <class>Tagman_Intellitag_Block</class>
+
+            </tagman_intellitag>
+
+        </blocks>
+
+
+        <models>
+            <tagman_intellitag>
+                    <class>Tagman_Intellitag_Model</class>
+					 <resourceModel>tagman_intellitag_mysql4</resourceModel>
+            </tagman_intellitag>
+			 <tagman_intellitag_mysql4>
+                <class>Tagman_Intellitag_Model_Mysql4</class>
+                <entities>
+                    <variables>
+                        <table>tagman_intellitag_variables</table>
+                    </variables>
+                </entities>
+            </tagman_intellitag_mysql4>
+        </models>
+
+        <helpers>
+            <tagman_intellitag>
+                    <class>Tagman_Intellitag_Helper</class>
+            </tagman_intellitag>
+        </helpers>
+			
+		 <resources>
+            <tagman_intellitag_setup>
+                <setup>
+                    <module>Tagman_Intellitag</module>
+                </setup>
+            </tagman_intellitag_setup>
+        </resources>
+    </global>
+	<frontend>
+        <layout>
+            <updates>
+                <tagman_intellitag module="Tagman_Intellitag">
+                    <file>tagman_intellitag.xml</file>
+                </tagman_intellitag>
+            </updates>
+        </layout>
+    </frontend>
+	<default>
+        <tab1>
+            <credentials>
+                <client_id_text_field>CLIENT ID SAMPLE</client_id_text_field>  
+				<site_id_text_field>SITE ID SAMPLE</site_id_text_field>
+                <host_text_field>CDN HOST SAMPLE</host_text_field>
+            </credentials>
+        </tab1>
+    </default>
+	<admin>
+        <routers>
+            <adminhtml>
+                <args>
+                    <modules>
+                        <Tagman_Intellitag before="Mage_Adminhtml">Tagman_Intellitag_Adminhtml</Tagman_Intellitag>
+                    </modules>
+                </args>
+            </adminhtml>
+        </routers>
+    </admin>
+
+    <adminhtml>
+        <layout>
+            <updates>
+                <tagman_intellitag>
+                    <file>tagman/intellitag.xml</file>
+                </tagman_intellitag>
+            </updates>
+        </layout>
+    </adminhtml>
+</config>
