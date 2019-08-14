@@ -69,6 +69,7 @@ class Tagman_Intellitag_Block_Adminhtml_Variables_Edit_Form extends Mage_Adminht
         ));
 
         foreach($laModelsForDropdownList as $tsCurrentModelName){
+		
             $taPropertiesForDropdownList=null;
             $tmCurrentlyLoadedModel = Mage::getModel($tsCurrentModelName);
             $tsPropertyIdForHTML=str_replace("/","_",$tsCurrentModelName);
@@ -79,7 +80,7 @@ class Tagman_Intellitag_Block_Adminhtml_Variables_Edit_Form extends Mage_Adminht
                 $tsFormatedMethodName=substr($tsCurrentMethodName,3,strlen($tsCurrentMethodName));
                 $toReflectionMethod = new ReflectionMethod(get_class($tmCurrentlyLoadedModel),$tsCurrentMethodName);
                 $toReflectionParameters = $toReflectionMethod->getParameters();
-
+				
                 //define dynamic methods that shouldn't be displayed
                 switch($tsCurrentModelName){
                     case 'catalog/category':
@@ -125,8 +126,8 @@ class Tagman_Intellitag_Block_Adminhtml_Variables_Edit_Form extends Mage_Adminht
                             break;
                         case 'array':
                             $taReturnedArray = $tmCurrentlyLoadedModel->$tsCurrentMethodName();
-                            if(count($taReturnedArray)>0){
-                                switch(gettype($taReturnedArray[0])){
+							if(count($taReturnedArray)>0){							
+                               	switch(gettype(reset($taReturnedArray))){
                                     case 'string':
                                     case 'integer':
                                     case 'double':
@@ -224,6 +225,7 @@ class Tagman_Intellitag_Block_Adminhtml_Variables_Edit_Form extends Mage_Adminht
 
             ));
         }
+		
         if($lmModelFromRegistry->getData('is_static')==2){
             $taData=explode("&&",$lmModelFromRegistry->getData('magento_value'));
             $tsFieldName=str_replace("/","_",$taData[0]);

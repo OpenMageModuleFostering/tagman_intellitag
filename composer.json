@@ -3,10 +3,10 @@
     "type": "magento-module",
     "license": "Open-Software-License-(OSL)",
     "homepage": "",
-    "description": "Provides a simple and seamless integration with TagMan&amp;apos;s Marketing Data Platform and Tag Management System.",
+    "description": "Provides a simple and seamless integration with TagMan&amp;amp;apos;s Marketing Data Platform and Tag Management System.",
     "authors": [
     {
-        "name": "TagMan Ltd.",
+        "name": "TagMan ltd.",
         "email": "toby.doig@tagman.com"
     }
 ],
