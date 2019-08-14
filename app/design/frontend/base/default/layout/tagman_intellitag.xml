@@ -8,7 +8,7 @@
         
         
         <reference name="head">    
-            <block type="tagman_intellitag/jsinjector" 
+            <block type="tagman_intellitag/JsInjector" 
                    name="tagman_intellitag_jsinjector" 
                    template="tagman_intellitag/jsinjector.phtml" />
             

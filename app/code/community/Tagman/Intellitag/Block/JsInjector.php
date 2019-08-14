@@ -6,39 +6,53 @@ class Tagman_Intellitag_Block_JsInjector
 	public function addTagManJavascriptBlock()
 	{
 
-	$lClient = Mage::getStoreConfig('tab1/credentials/client_id_text_field',Mage::app()->getStore());
-	$lSite = Mage::getStoreConfig('tab1/credentials/site_id_text_field',Mage::app()->getStore());
-	$lHost = Mage::getStoreConfig('tab1/credentials/host_text_field',Mage::app()->getStore());
+		$lClient = Mage::getStoreConfig('tab1/credentials/client_id_text_field',Mage::app()->getStore());
+		$lSite = Mage::getStoreConfig('tab1/credentials/site_id_text_field',Mage::app()->getStore());
+		$lHost = Mage::getStoreConfig('tab1/credentials/host_text_field',Mage::app()->getStore());
+		
+		$lJs = '';
 	
-	//page_type
-	$lControlerName = Mage::app()->getRequest()->getControllerName();
-	
-	$lTmParams = $this->getTmParams();
-	
-	
-	$lJs = '
-				<script type="text/javascript">
-					window.tmParam = {
-					page_type: "'.$lControlerName.'"'.$lTmParams.'
-				};
-				</script>
+		if(($lClient != 'CLIENT ID SAMPLE' && strlen($lClient) > 0) && $lSite != 'SITE ID SAMPLE' && ($lHost != 'CDN HOST SAMPLE' && strlen($lHost) > 0)){
+		
+		
+			//page_type
+			$lControlerName = Mage::app()->getRequest()->getControllerName();
 			
-				<script type="text/javascript">
+			$lTmParams = $this->getTmParams();
 			
-				(function(d,s){
-					var client = "'.$lClient.'";
-					var siteId = '.$lSite.';
-					//  do not edit
-					var a=d.createElement(s),b=d.getElementsByTagName(s)[0];
-					a.async=true;a.type="text/javascript";
-					a.src="//'.$lHost.'/clients/"+client+"/"+siteId+".js";
-					a.tagman="st="+(+new Date())+"&c="+client+"&sid="+siteId;
-					b.parentNode.insertBefore(a,b);
-					})(document,"script");
+			$lClient = str_replace(' ', '', $lClient);
+			if ( is_numeric ( $lSite ) )
+			  $lSite = (trim($lSite) == '')? 1 :$lSite;
+			else
+			  $lSite = 1;
+			$lHost = str_replace(' ', '', $lHost);
+			
+			
+			$lJs = '
+						<script type="text/javascript">
+							window.tmParam = {
+							page_type: "'.$lControlerName.'"'.$lTmParams.'
+						};
+						</script>
 					
-				</script>';
-				 
-        return ($lJs);
+						<script type="text/javascript">
+					
+						(function(d,s){
+							var client = "'.$lClient.'";
+							var siteId = '.$lSite.';
+							//  do not edit
+							var a=d.createElement(s),b=d.getElementsByTagName(s)[0];
+							a.async=true;a.type="text/javascript";
+							a.src="//'.$lHost.'/clients/"+client+"/"+siteId+".js";
+							a.tagman="st="+(+new Date())+"&c="+client+"&sid="+siteId;
+							b.parentNode.insertBefore(a,b);
+							})(document,"script");
+							
+						</script>';
+		} else {
+		 $lJs = '<script type="text/javascript">//Setup TagMan extension properly</script>';
+		}
+			return ($lJs);
     }
 	
 	private function getTmParams()

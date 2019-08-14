@@ -126,7 +126,7 @@ class Tagman_Intellitag_Block_Adminhtml_Variables_Edit_Form extends Mage_Adminht
                         case 'array':
                             $taReturnedArray = $tmCurrentlyLoadedModel->$tsCurrentMethodName();
                             if(count($taReturnedArray)>0){
-                                switch($taReturnedArray[0]){
+                                switch(gettype($taReturnedArray[0])){
                                     case 'string':
                                     case 'integer':
                                     case 'double':
