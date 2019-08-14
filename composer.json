@@ -3,7 +3,7 @@
     "type": "magento-module",
     "license": "Open-Software-License-(OSL)",
     "homepage": "",
-    "description": "Extension injects TagMan javascript code into every client page to provide TagMan's experience.",
+    "description": "Provides a simple and seamless integration with TagMan's Marketing Data Platform and Tag Management System.",
     "authors": [
     {
         "name": "TagMan Ltd.",

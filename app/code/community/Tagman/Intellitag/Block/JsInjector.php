@@ -6,185 +6,183 @@ class Tagman_Intellitag_Block_JsInjector
 	public function addTagManJavascriptBlock()
 	{
 
-	$client = Mage::getStoreConfig('tab1/credentials/client_id_text_field',Mage::app()->getStore());
-	$site = Mage::getStoreConfig('tab1/credentials/site_id_text_field',Mage::app()->getStore());
-	$host = Mage::getStoreConfig('tab1/credentials/host_text_field',Mage::app()->getStore());
+	$lClient = Mage::getStoreConfig('tab1/credentials/client_id_text_field',Mage::app()->getStore());
+	$lSite = Mage::getStoreConfig('tab1/credentials/site_id_text_field',Mage::app()->getStore());
+	$lHost = Mage::getStoreConfig('tab1/credentials/host_text_field',Mage::app()->getStore());
 	
 	//page_type
-	$controlerName = Mage::app()->getRequest()->getControllerName();
+	$lControlerName = Mage::app()->getRequest()->getControllerName();
 	
-	$tmParams = $this->getTmParams();
+	$lTmParams = $this->getTmParams();
 	
 	
-	$js = '
+	$lJs = '
 				<script type="text/javascript">
 					window.tmParam = {
-					page_type: "'.$controlerName.'"'.$tmParams.'
+					page_type: "'.$lControlerName.'"'.$lTmParams.'
 				};
 				</script>
 			
 				<script type="text/javascript">
 			
 				(function(d,s){
-					var client = "'.$client.'";
-					var siteId = '.$site.';
+					var client = "'.$lClient.'";
+					var siteId = '.$lSite.';
 					//  do not edit
 					var a=d.createElement(s),b=d.getElementsByTagName(s)[0];
 					a.async=true;a.type="text/javascript";
-					a.src="//'.$host.'/clients/"+client+"/"+siteId+".js";
+					a.src="//'.$lHost.'/clients/"+client+"/"+siteId+".js";
 					a.tagman="st=(" + new Date() +")&c=" + client + "&sid=" + siteId;
 					b.parentNode.insertBefore(a,b);
 					})(document,"script");
 					
 				</script>';
 				 
-        return ($js);
+        return ($lJs);
     }
 	
 	private function getTmParams()
 	{
-		$variables = unserialize(Mage::getStoreConfig("tab1/variables/field"));
-		$cModel = Mage::getModel('tagman_intellitag/variables');
-		$tmParam = '';
-		$prefix = ',
+		$lVariables = unserialize(Mage::getStoreConfig("tab1/variables/field"));
+		$lModel = Mage::getModel('tagman_intellitag/variables');
+		$lTmParam = '';
+		$aPrefix = ',
 						';
-		foreach($variables as $var){
-			$name = $var['text_field'];
-			$varId = $var['drop_down'];
-			$cModel->load($varId);
-			$isStatic=$cModel->getData('is_static');
-			if($isStatic==1){
-				$tmParam .= $prefix . $name.': '. '"' . $cModel->getValue() .'"';
+		foreach($lVariables as $tVar){
+			$aVarName = $tVar['text_field'];
+			$lVarId = $tVar['drop_down'];
+			$lModel->load($lVarId);
+			$lIsStatic=$lModel->getData('is_static');
+			if($lIsStatic==1){
+				$lTmParam .= $aPrefix . $aVarName.': '. '"' . $lModel->getValue() .'"';
 			} else {
-				$dynamic = explode('&&', $cModel->getData('magento_value'));
-				$tmp_model = Mage::getModel($dynamic[0]);
 				
-			switch($dynamic[0]){
-				case 'catalog/product':
-					$tmParam .= $this->getCatalogProduct($prefix, $name, $tmp_model, $dynamic);
-				break;
-				case 'catalog/category':
-					$tmParam .= $this->getCatalogCategory($prefix, $name, $tmp_model, $dynamic);
-				break;
-				case 'customer/customer':
-					$tmParam .= $this->getCustomerCustomer($prefix, $name, $tmp_model, $dynamic);
+				$aDynamic = explode('&&', $lModel->getData('magento_value'));
+				$aModel = Mage::getModel($aDynamic[0]);
+				switch($aDynamic[0]){
+					case 'catalog/product':
+						$lTmParam .= $this->getCatalogProduct($aPrefix, $aVarName, $aModel, $aDynamic);
 					break;
-				case 'sales/order':
-					$tmParam .= $this->getSalesOrder($prefix, $name, $tmp_model, $dynamic);
+					case 'catalog/category':
+						$lTmParam .= $this->getCatalogCategory($aPrefix, $aVarName, $aModel, $aDynamic);
 					break;
-				 case 'sales/quote':
-					$tmParam .= $this->getSalesQuote($prefix, $name, $tmp_model, $dynamic);
-					break;
-				default:
-					
-					break;
-				}
+					case 'customer/customer':
+						$lTmParam .= $this->getCustomerCustomer($aPrefix, $aVarName, $aModel, $aDynamic);
+						break;
+					case 'sales/order':
+						$lTmParam .= $this->getSalesOrder($aPrefix, $aVarName, $aModel, $aDynamic);
+						break;
+					 case 'sales/quote':
+							
+						$lTmParam .= $this->getSalesQuote($aPrefix, $aVarName, $aModel, $aDynamic);
+						break;
+					default:
+						
+						break;
+					}
 			}
 		}
-		return ($tmParam);
+		
+		return ($lTmParam);
 	}
 	
-	private function getCatalogProduct($prefix, $name, $tmp_model, $dynamic){
+	private function getCatalogProduct($aPrefix, $aVarName, $aModel, $aDynamic){
 	$lParam = '';
 	if(Mage::registry('current_product')){
-					$id=Mage::registry('current_product')->getId();
-					$tmp_model->load($id);
-					$methodVal = $tmp_model->$dynamic[1]();
-					
-					if (gettype($methodVal)=="object"){
-
-						$methodVal = $methodVal->$dynamic[2]();
+					$lId=Mage::registry('current_product')->getId();
+					$aModel->load($lId);
+					$lMethodVal = $aModel->$aDynamic[1]();
+					if (gettype($lMethodVal)=="object"){
+						$lMethodVal = $lMethodVal->$aDynamic[2]();
 					}
-					if(gettype($methodVal)=="array"){
-						$methodVal=implode("|", $methodVal);
+					if(gettype($lMethodVal)=="array"){
+						$lMethodVal=implode("|", $lMethodVal);
 					} 
-					$methodVal = strip_tags($methodVal);
-					$lParam .= $prefix . $name.': "'.$methodVal.'"';
+					$lMethodVal = strip_tags($lMethodVal);
+					$lParam .= $aPrefix . $aVarName.': "'.addslashes($lMethodVal).'"';
 
 				}
 		return ($lParam);
 	}
 	
-	private function getCatalogCategory($prefix, $name, $tmp_model, $dynamic){
+	private function getCatalogCategory($aPrefix, $aVarName, $aModel, $aDynamic){
 	$lParam = '';
 	if(Mage::registry('current_category')){
-						$id=Mage::registry('current_category')->getId();
-						$tmp_model->load($id);
-						$methodVal = $tmp_model->$dynamic[1]();
-						if (gettype($methodVal)=="object"){
-							$methodVal = $methodVal->$dynamic[2]();
+						$lId=Mage::registry('current_category')->getId();
+						$aModel->load($lId);
+						$lMethodVal = $aModel->$aDynamic[1]();
+						if (gettype($lMethodVal)=="object"){
+							$lMethodVal = $lMethodVal->$aDynamic[2]();
 						}
-						if(gettype($methodVal)=="array"){
-							$methodVal=implode("|", $methodVal);
+						if(gettype($lMethodVal)=="array"){
+							$lMethodVal=implode("|", $lMethodVal);
 						}
 
-						$lParam .= $prefix . $name.': "'.$methodVal.'"';
+						$lParam .= $aPrefix . $aVarName.': "'.addslashes($lMethodVal).'"';
 					}
 	return ($lParam);
 	}
 	
-	private function getCustomerCustomer($prefix, $name, $tmp_model, $dynamic){
+	private function getCustomerCustomer($aPrefix, $aVarName, $aModel, $aDynamic){
 	$lParam = '';
 	if(Mage::getSingleton('customer/session')->isLoggedIn()) {
 		   $id=Mage::getSingleton('customer/session')->getId();
-		   $tmp_model->load($id);
-		   $methodVal = $tmp_model->$dynamic[1]();
-		   //var_dump('1'.$dynamic[1]);
-		   if (gettype($methodVal)=="object"){
-				//var_dump('2'.$dynamic[2]);
-				$methodVal = $methodVal->$dynamic[2]();
+		   $aModel->load($id);
+		   $lMethodVal = $aModel->$aDynamic[1]();
+		   if (gettype($lMethodVal)=="object"){
+				$lMethodVal = $lMethodVal->$aDynamic[2]();
 			}
-		   if(gettype($methodVal)=="array"){
-			   $methodVal=implode("|", $methodVal);
+		   if(gettype($lMethodVal)=="array"){
+			   $lMethodVal=implode("|", $lMethodVal);
 		   }
-		   $lParam .= $prefix . $name.': "'.$methodVal.'"';
+		   $lParam .= $aPrefix . $aVarName.': "'.addslashes($lMethodVal).'"';
 		}
 	return ($lParam);
 	}
 	
-	private function getSalesOrder($prefix, $name, $tmp_model, $dynamic){
+	private function getSalesOrder($aPrefix, $aVarName, $aModel, $aDynamic){
 	$lParam = '';
-	$tmp_model->loadByIncrementId(Mage::getSingleton('checkout/session')->getLastRealOrderId());
-					$methodVal = $tmp_model->$dynamic[1]();
+	$aModel->loadByIncrementId(Mage::getSingleton('checkout/session')->getLastRealOrderId());
+					$lMethodVal = $aModel->$aDynamic[1]();
 					
-					if (gettype($methodVal)=="object"){
-							$methodVal = $methodVal->$dynamic[2]();
+					if (gettype($lMethodVal)=="object"){
+							$lMethodVal = $lMethodVal->$aDynamic[2]();
 					}
-					if($dynamic[1]=="getAllItems"){
-						$methodVal = $this->getAllItems($methodVal, $dynamic);
+					if($aDynamic[1]=="getAllItems"){
+						$lMethodVal = $this->getAllItems($lMethodVal, $aDynamic);
 						}
-					elseif(gettype($methodVal)=="array"){
-						$methodVal=implode("|", $methodVal);
+					elseif(gettype($lMethodVal)=="array"){
+						$lMethodVal=implode("|", $lMethodVal);
 					}
-					$lParam .= $prefix . $name.': "'.$methodVal.'"';
+					$lParam .= $aPrefix . $aVarName.': "'.$lMethodVal.'"';
 	return ($lParam);
 	}
 	
-	private function getSalesQuote($prefix, $name, $tmp_model, $dynamic){
+	private function getSalesQuote($aPrefix, $aVarName, $aModel, $aDynamic){
 	$lParam = '';
-		$quote = Mage::getSingleton('checkout/session')->getQuote();
-		$methodVal = $quote->$dynamic[1]();
+		$lQuote = Mage::getSingleton('checkout/session')->getQuote();
+		$lMethodVal = $lQuote->$aDynamic[1]();
 		
-		if($dynamic[1]=="getAllItems"){
-				$methodVal = $this->getAllItems($methodVal, $dynamic);
+		if($aDynamic[1]=="getAllItems"){
+				$lMethodVal = $this->getAllItems($lMethodVal, $aDynamic);
 			}
 		
-		elseif(gettype($methodVal)=="array"){
-				$methodVal=implode("|", $methodVal);
+		elseif(gettype($lMethodVal)=="array"){
+				$lMethodVal=implode("|", $lMethodVal);
 			}
-		$lParam .= $prefix . $name.': "'.$methodVal.'"';
+		$lParam .= $aPrefix . $aVarName.': "'.$lMethodVal.'"';
 	return ($lParam);
 	}
 	
-	private function getAllItems($method, $dynamic){
-		$allItemsVal='';
-		$pipe = '';
-		foreach($method as $item) {
-		if($item->getOriginalPrice()> 0){
-			$allItemsVal .= $pipe . addslashes($item->$dynamic[2]());
-			$pipe = '|';
+	private function getAllItems($lMethod, $aDynamic){
+		$lAllItemsVal='';
+		$lPipe = '';
+		foreach($lMethod as $tItem) {
+		if($tItem->getOriginalPrice()> 0){
+			$lAllItemsVal .= $lPipe . addslashes($tItem->$aDynamic[2]());
+			$lPipe = '|';
 			}
 		}
-		return ($allItemsVal);
+		return ($lAllItemsVal);
 	}
 }
