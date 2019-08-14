@@ -3,15 +3,12 @@ class Tagman_Intellitag_Adminhtml_VariablesController extends Mage_Adminhtml_Con
 {
     public function indexAction()
     {
-        // Let's call our initAction method which will set some basic params for each action
         $this->_initAction()
             ->renderLayout();
-        //$this->removeButton('add');
     }  
      
     public function newAction()
     {  
-        // We just forward the new action to a blank edit form
         $this->_forward('edit');
     } 
      
@@ -19,15 +16,13 @@ class Tagman_Intellitag_Adminhtml_VariablesController extends Mage_Adminhtml_Con
     {  
         $this->_initAction();
 
-        // Get id if available
         $id  = $this->getRequest()->getParam('id');
         $model = Mage::getModel('tagman_intellitag/variables');
 
         if ($id) {
-            // Load record
+        	
             $model->load($id);
-
-            // Check if record is loaded
+            
             if (!$model->getId()) {
                 Mage::getSingleton('adminhtml/session')->addError($this->__('This variable no longer exists.'));
                 $this->_redirect('*/*/');
@@ -62,8 +57,9 @@ class Tagman_Intellitag_Adminhtml_VariablesController extends Mage_Adminhtml_Con
             if($postData['is_static']==1){
                 $postData['value']=$postData['static_value'];
                 $postData['magento_value']="";
+				$postData['custom_value']="";
             }
-            else{
+            else if ($postData['is_static']==2){
                 $postData['magento_value']=$postData['magento_model'];
                 $postData['magento_value'].="&&";
 
@@ -73,7 +69,13 @@ class Tagman_Intellitag_Adminhtml_VariablesController extends Mage_Adminhtml_Con
                 $postData['magento_value'].=$postData[$tmp_data];
                 $postData['value']= "dynamic value";
                 $postData['static_value']="";
+				$postData['custom_value']="";
             }
+			else{
+				 $postData['magento_value']=$postData['custom_value'];
+				 $postData['value']= "dynamic value";
+				 $postData['static_value']="";
+			}
 
             $model->setData($postData);
             try {
@@ -119,17 +121,10 @@ class Tagman_Intellitag_Adminhtml_VariablesController extends Mage_Adminhtml_Con
         }
         $this->_redirect('*/*/');
     }     
-    /**
-     * Initialize action
-     *
-     * Here, we set the breadcrumbs and the active menu
-     *
-     * @return Mage_Adminhtml_Controller_Action
-     */
+
     protected function _initAction()
     {
         $this->loadLayout()
-            // Make the active menu match the menu config nodes (without 'children' inbetween)
             ->_setActiveMenu('tagman_menu')
             ->_title($this->__('tagman_menu'))->_title($this->__('Variables'))
             ->_addBreadcrumb($this->__('tagman_menu'), $this->__('tagman_intellitag'))
@@ -137,6 +132,7 @@ class Tagman_Intellitag_Adminhtml_VariablesController extends Mage_Adminhtml_Con
 
         return $this;
     }
+    
     public function gridAction()
     {
         $this->loadLayout();
@@ -144,14 +140,10 @@ class Tagman_Intellitag_Adminhtml_VariablesController extends Mage_Adminhtml_Con
             $this->getLayout()->createBlock('tagman_intellitag/adminhtml_variables_grid')->toHtml()
         );
     }
-     
-    /**
-     * Check currently called action by permissions for current user
-     *
-     * @return bool
-     */
+    
     protected function _isAllowed()
     {
-        return Mage::getSingleton('admin/session')->isAllowed('tagman_intellitag/tagman_intellitag_variables');
+        return Mage::getSingleton('admin/session')->isAllowed('tagman_menu/variables_menu_item');       
+    
     }
 }

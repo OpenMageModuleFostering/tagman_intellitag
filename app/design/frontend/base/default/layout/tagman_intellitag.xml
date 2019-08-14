@@ -1,31 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
-<!-- all layout files begin with this node -->
 <layout>
-    
-    <!-- this is the layout handle we are interested in -->
     <default>
-        
-        
         <reference name="head">    
             <block type="tagman_intellitag/JsInjector" 
                    name="tagman_intellitag_jsinjector" 
                    template="tagman_intellitag/jsinjector.phtml" />
-            
         </reference>
-		
-		<!--<reference name="head">  
-            <block type="core/text" name="simple_example_javascript_block"> 
-                <action method="setText"> 
-                    <text><![CDATA[
-                    <script type="text/javascript">
-                        alert("Tagman js alert from tagman_intellitag.xml");
-                    </script>
-                    ]]></text>
-                </action>
-            </block>
-        </reference>-->
-        
     </default>
-    
 </layout>

@@ -27,7 +27,7 @@
 
                             <variables_menu_item translate="title" module="tagman_intellitag">
                                 <title>Variables</title>
-                                <sort_order>10</sort_order>
+                                <sort_order>20</sort_order>
                             </variables_menu_item>
 
                         </children>

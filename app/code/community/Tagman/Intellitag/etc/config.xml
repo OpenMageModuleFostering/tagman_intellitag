@@ -2,16 +2,14 @@
 <config>
     <modules>
         <Tagman_Intellitag>
-            <version>1.0.7</version>
+            <version>1.0.8</version>
         </Tagman_Intellitag>
     </modules>
 	<global>
 	  <blocks>
-            
-            <!-- a unique short name for our block files -->
-            <tagman_intellitag>
-                
-                <!-- the location of our module's blocks -->
+     
+            <tagman_intellitag>           
+   
                 <class>Tagman_Intellitag_Block</class>
 
             </tagman_intellitag>
@@ -60,9 +58,9 @@
 	<default>
         <tab1>
             <credentials>
-                <client_id_text_field>CLIENT ID SAMPLE</client_id_text_field>  
-				<site_id_text_field>SITE ID SAMPLE</site_id_text_field>
-                <host_text_field>CDN HOST SAMPLE</host_text_field>
+                <client_id_text_field></client_id_text_field>  
+				<site_id_text_field></site_id_text_field>
+                <host_text_field></host_text_field>
             </credentials>
         </tab1>
     </default>

@@ -5,26 +5,21 @@ class Tagman_Intellitag_Block_Adminhtml_Variables_Grid extends Mage_Adminhtml_Bl
     {
         parent::__construct();
          
-        // Set some defaults for our grid
         $this->setDefaultSort('id');
         $this->setId('tagman_intellitag_variables_grid');
         $this->setDefaultDir('asc');
         $this->setSaveParametersInSession(true);
         $this->setUseAjax(true);
-		//$this->setPagerVisibility(false);
-		//$this->setFilterVisibility(false);
 
     }
      
     protected function _getCollectionClass()
     {
-        // This is the model we are using for the grid
         return 'tagman_intellitag/variables_collection';
     }
      
     protected function _prepareCollection()
     {
-        // Get and set our collection for the grid
         $collection = Mage::getResourceModel($this->_getCollectionClass());
         $this->setCollection($collection);
          
@@ -33,7 +28,6 @@ class Tagman_Intellitag_Block_Adminhtml_Variables_Grid extends Mage_Adminhtml_Bl
      
     protected function _prepareColumns()
     {
-        // Add the columns that should appear in the grid
         $this->addColumn('id',
             array(
                 'header'=> $this->__('ID'),
@@ -63,7 +57,6 @@ class Tagman_Intellitag_Block_Adminhtml_Variables_Grid extends Mage_Adminhtml_Bl
      
     public function getRowUrl($row)
     {
-        // This is where our row data will link to
         return $this->getUrl('*/*/edit', array('id' => $row->getId()));
     }
 

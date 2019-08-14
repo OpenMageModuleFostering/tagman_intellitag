@@ -45,8 +45,6 @@ class Tagman_Intellitag_Block_Field
         'label' => Mage::helper('tagman_intellitag')->__('Value')
          ));
 
-
-         // Disables "Add after" button
          $this->_addAfter = false;
          $this->_addButtonLabel = Mage::helper('tagman_intellitag')->__('Add New');
     }
@@ -76,12 +74,5 @@ class Tagman_Intellitag_Block_Field
                                $row->getData('drop_down')),
         'selected="selected"'
     );
-   /*
-    $row->setData(
-        'option_extra_attr_' . $this->_getSeconFieldRenderer()->calcOptionHash(
-                               $row->getData('second_field')),
-        'selected="selected"'
-    );
-   */
     }
 }
