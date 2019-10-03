@@ -1,7 +1,7 @@
 {
-    "name": "OpenMageModuleFostering\/Tagman_Intellitag",
+    "name": "openmage-module-fostering\/tagman_intellitag",
     "type": "magento-module",
-    "license": "Open-Software-License-(OSL)",
+    "license": "OSL-3.0",
     "homepage": "",
     "description": "redone version of TagMan's magento extension",
     "authors": [
