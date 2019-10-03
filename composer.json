@@ -1,16 +1,19 @@
 {
-    "name": "OpenMageModuleFostering/Tagman_Intellitag",
+    "name": "OpenMageModuleFostering\/Tagman_Intellitag",
     "type": "magento-module",
     "license": "Open-Software-License-(OSL)",
     "homepage": "",
     "description": "redone version of TagMan's magento extension",
     "authors": [
-    {
-        "name": "Toby Doig",
-        "email": "toby.doig@tagman.com"
-    }
-],
+        {
+            "name": "Toby Doig",
+            "email": "toby.doig@tagman.com"
+        }
+    ],
     "suggest": {
-        "magento-hackathon/magento-composer-installer": "*"
-    }
+        "magento-hackathon\/magento-composer-installer": "*"
+    },
+    "keywords": [
+        "openmage-module"
+    ]
 }
